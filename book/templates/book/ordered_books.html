@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ordered Books</title>
+</head>
+<body>
+    {% for book in book_objects %}
+        <li><b>{{book.name}}</b>
+            <p>description: {{book.description}}</p>
+            <p>count: {{book.count}}</p>
+            <p>Authors: </p>
+            {% for a in book.authors.all %}
+            <p>{{a.name}} {{a.surname}}</p>
+            {% endfor %}
+        </li>
+    {% endfor %}
+</body>
+</html>

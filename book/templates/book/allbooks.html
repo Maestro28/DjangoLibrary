@@ -1,0 +1,75 @@
+{% extends "book/index.html" %}
+
+{% block title %}All books{% endblock %}
+
+{% block content %}
+    <h1>Information about all books in library</h1>
+    <!--<a href="{% url 'order:all_orders' %}">Orders</a>-->
+    <a href="{% url 'book:add_book' %}">Add book</a>
+    {% if book_objects %}
+    <p>Find book by id:
+        {% for book in book_objects %}
+            <a href="{% url 'book:id_book' book.id %}">{{ book.id }}</a>
+        {% endfor %}
+    </p>
+
+    <p>Unordered books id:
+        {% for book_id in unordered_books_id %}
+            <a href="{% url 'book:id_book' book_id %}">{{ book_id }}</a>
+        {% endfor %}
+    </p>
+
+    <a href="{% url 'book:filtered_books' %}">Filtered books</a><br><br>
+    <a href="{% url 'book:ordered_books_count_ascending' %}">Ordered books by count ascending</a><br>
+    <a href="{% url 'book:ordered_books_count_descending' %}">Ordered books by count descending</a><br>
+    <a href="{% url 'book:ordered_books_name_ascending' %}">Ordered books by name ascending</a><br>
+    <a href="{% url 'book:ordered_books_name_descending' %}">Ordered books by name descending</a><br>
+    <br>
+
+        <table style="width:100%">
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Count</th>
+            <th>Authors</th>
+            <th>Edit</th>
+          </tr>
+            {% for book in book_objects %}
+          <tr>
+            <td>{{book.id}}</td>
+            <td>{{book.name}}</td>
+            <td>{{book.description}}</td>
+            <td>{{book.count}}</td>
+            <td>{% for a in book.authors.all %}
+            {{a.name}} {{a.surname}}
+                {% if not forloop.last %}
+                ,
+                {% endif%}
+            {% endfor %}</td>
+              <td><a href="{% url 'book:update_book' book.id %}">Update book</a><br><br></td>
+          </tr>
+            {% endfor %}
+        </table>
+
+
+    <ul>
+    {% for book in book_objects %}
+        <li><h3>{{book.name}}</h3>
+             <a href="{% url 'book:update_book' book.id %}">Update book</a><br><br>
+            <p>id: {{book.id}}</p>
+            <p>description: {{book.description}}</p>
+            <p>count: {{book.count}}</p>
+            <p>Authors: </p>
+            {% for a in book.authors.all %}
+            <p>{{a.name}} {{a.surname}}</p>
+            {% endfor %}
+        </li>
+    {% endfor %}
+    </ul>
+
+    {% else %}
+        <p>No books are available.</p>
+        {{book_objects}}
+    {% endif %}
+{% endblock %}

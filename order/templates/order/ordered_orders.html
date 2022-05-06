@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orderd orders</title>
+</head>
+<body>
+    <h1>Information about all orders sorted by date (created, plated at)</h1>
+
+    {% if order_objects %}
+    <ol>
+    {% for order in order_objects %}
+        <li><h3>Order(id = {{order.id}})</h3>
+            <p><b>user:</b> {{order.user.first_name}} {{order.user.last_name}}</p>
+            <p><b>book:</b> {{order.book.name}}</p>
+            <p><b>created at:</b> {{order.created_at}}</p>
+            <p><b>end at:</b> {{order.end_at}}</p>
+            <p><b>plated end at:</b> {{order.plated_end_at}}</p><br>
+        </li>
+    {% endfor %}
+    </ol>
+    {% else %}
+        <p>No orders are available.</p>
+    {% endif %}
+</body>
+</html>

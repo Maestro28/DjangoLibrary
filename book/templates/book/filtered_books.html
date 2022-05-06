@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filtered books</title>
+</head>
+<body>
+    <h1>Information about all books by different filters</h1>
+    <a href="{% url 'book:allbooks' %}">All books</a>
+
+    {% if books_by_name %}
+    <p><h3>Books by name starts with "book":</h3>
+        <ul>
+        {% for book in books_by_name %}
+        <li>
+            <p>book name: {{book.name}}</p>
+        </li>
+        {% endfor %}
+        </ul>
+    </p>
+    {% endif %}
+
+    {% if books_by_description %}
+    <p><h3>Books about "adventures":</h3>
+        <ul>
+        {% for book in books_by_description %}
+        <li>
+            <p>book name: {{book.name}}</p>
+            <p>book description: {{book.description}}</p>
+        </li>
+        {% endfor %}
+        </ul>
+    </p>
+    {% endif %}
+
+    {% if books_by_author %}
+    <p><h3>Books by author name contains "M":</h3>
+        <ul>
+        {% for book in books_by_author %}
+        <li>
+            <p>book name: {{book.name}}</p>
+            {% for a in book.authors.all %}
+            <p>author name: {{a.name}} {{a.surname}}</p>
+            {% endfor %}
+        </li>
+        {% endfor %}
+        </ul>
+    </p>
+    {% endif %}
+
+    {% if orders_by_user_id and user_id %}
+    <p><h3>All books given to specific user (by id={{user_id}}):</h3>
+        <ul>
+        {% for order in orders_by_user_id %}
+        <li>
+            <p>book name: {{order.book.name}}</p>
+        </li>
+        {% endfor %}
+        </ul>
+    </p>
+    {% endif %}
+
+    {% if books_by_author_id %}
+    <p><h3>All books for specific author (by id={{author_id}}):</h3>
+        <ul>
+        {% for book in books_by_author_id %}
+        <li>
+            <p>book name: {{book.name}}</p>
+            {% for a in book.authors.all %}
+            <p>author name: {{a.name}} {{a.surname}}</p>
+            {% endfor %}
+        </li>
+        {% endfor %}
+        </ul>
+    </p>
+    {% endif %}
+
+</body>
+</html>

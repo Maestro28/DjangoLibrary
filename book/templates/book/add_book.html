@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add book</title>
+</head>
+<body>
+    <form action="", method="post", autocomplete="off">
+        {% csrf_token %}
+        <!--<label for="name">name:</label>
+        {{form.name}}<br>
+        <label for="description">description:</label>
+        {{form.description}}<br>
+        <label for="count">count:</label>
+        {{form.count}}<br>
+        <label for="authors">authors:</label>
+        {{form.authors}}<br>-->
+        {{form.as_p}}
+        <button type="submit">{{submit}}</button>
+    </form>
+</body>
+</html>

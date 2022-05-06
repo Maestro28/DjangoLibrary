@@ -1,0 +1,44 @@
+{% extends "book/index.html" %}
+
+{% block title %}All authors{% endblock %}
+
+{% block content %}
+
+    <h1>All Authors</h1>
+    <a href="{% url 'author:add_author' %}">Add author</a>
+    <br>
+    <br>
+
+    {% if author_objects %}
+
+
+        <table style="width:100%">
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Patronymic</th>
+            <th>Books</th>
+            <th>Edit</th>
+          </tr>
+            {% for author in author_objects %}
+          <tr>
+            <td>{{author.id}}</td>
+            <td>{{author.name}}</td>
+            <td>{{author.surname}}</td>
+            <td>{{author.patronymic}}</td>
+            <td>{% for b in author.books.all %}
+            {{b.name}}
+                {% if not forloop.last %}
+                ,
+                {% endif%}
+            {% endfor %}</td>
+              <td><a href="{% url 'author:update_author' author.id %}">Update author</a><br><br></td>
+          </tr>
+            {% endfor %}
+        </table>
+
+    {% else %}
+        <p>No authors are available.</p>
+    {% endif %}
+{% endblock %}
