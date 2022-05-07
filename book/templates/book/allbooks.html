@@ -7,13 +7,13 @@
     <!--<a href="{% url 'order:all_orders' %}">Orders</a>-->
     <a href="{% url 'book:add_book' %}">Add book</a>
     {% if book_objects %}
-    <p>Find book by id:
+    <p>Available books by id:
         {% for book in book_objects %}
             <a href="{% url 'book:id_book' book.id %}">{{ book.id }}</a>
         {% endfor %}
     </p>
 
-    <p>Unordered books id:
+    <p>Unordered books by id:
         {% for book_id in unordered_books_id %}
             <a href="{% url 'book:id_book' book_id %}">{{ book_id }}</a>
         {% endfor %}
@@ -25,12 +25,17 @@
     <input type="submit" value="Find">
     </form><br>
 
+    <form action="{% url 'book:search_id_results' %}" method="get">
+    <!--{% csrf_token %}-->
+    {{ id_form }}
+    <input type="submit" value="Find">
+    </form><br>
+
     <!--<form action="{% url 'book:search_results' %}" method="get">
     <input name="q" type="text" placeholder="Search...">
     </form>
     <br>-->
 
-    <a href="{% url 'book:filtered_books' %}">Filtered books</a><br><br>
     <a href="{% url 'book:ordered_books_count_ascending' %}">Ordered books by count ascending</a><br>
     <a href="{% url 'book:ordered_books_count_descending' %}">Ordered books by count descending</a><br>
     <a href="{% url 'book:ordered_books_name_ascending' %}">Ordered books by name ascending</a><br>

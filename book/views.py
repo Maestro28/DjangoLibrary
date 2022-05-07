@@ -5,7 +5,7 @@ from django.views import generic
 from django.db.models import Q
 
 from book.models import Book
-from book.forms import SearchingBookForm, BookForm
+from book.forms import SearchingBookForm, BookForm, IdForm
 from order.models import Order
 from author.models import Author
 
@@ -18,6 +18,7 @@ def allbooks(request):
     book_objects = Book.objects.all()
     order_objects = Order.objects.all()
     searchForm = SearchingBookForm()
+    id_form = IdForm()
 
     orders_book_id = []
     unordered_books_id = []
@@ -30,6 +31,7 @@ def allbooks(request):
     context = {'book_objects': book_objects,
                'unordered_books_id': unordered_books_id,
                'form': searchForm,
+               'id_form': id_form,
                }
     if searchForm.is_valid():
         context['book_objects'] = book_objects.filter(name__startswith=searchForm.cleaned_data['search'])
@@ -44,15 +46,32 @@ class SearchResultsView(generic.ListView):
 
     def get_queryset(self):  # new
         query = self.request.GET.get("search")
-        object_list = Book.objects.filter(
-            Q(name__icontains=query) | Q(description__icontains=query)
-        )
-        return object_list
+        if query:
+            object_list = Book.objects.filter(
+                Q(name__icontains=query) | Q(description__icontains=query)
+            )
+            return object_list
 
     def get_context_data(self, **kwargs):
         context = super(SearchResultsView, self).get_context_data(**kwargs)
         context['searched_text'] = self.request.GET.get("search")
         return context
+
+class BooksByAuthorId(generic.ListView):
+    model = Book
+    template_name = "book/search_results.html"
+
+    def get_queryset(self):  # new
+        query = self.request.GET.get("id_field")
+        object_list = Book.objects.filter(authors__id=query)#Hrere
+        print(f"query==={query}")
+        return object_list
+
+    def get_context_data(self, **kwargs):
+        context = super(BooksByAuthorId, self).get_context_data(**kwargs)
+        context['searched_id'] = self.request.GET.get("id_field")
+        return context
+
 
 def add_book(request, id=0):
     if request.method == "GET":
@@ -76,39 +95,10 @@ def add_book(request, id=0):
             form.save()
         return redirect('/allbooks')
 
+
 class ID_BookView(generic.DetailView):
     model = Book
     template_name = 'book/id_book.html'
-
-def filtered_books(request):
-
-    book_objects = Book.objects.all()
-    books_by_name = book_objects.filter(name__startswith="book")
-    books_by_description = book_objects.filter(description__icontains="adventures")
-    books_by_author = book_objects.filter(authors__name__contains="M")
-
-    user_id = 222
-    orders_by_user_id = Order.objects.filter(user_id=user_id)
-
-    author_id = 2
-    books_by_author_id = book_objects.filter(authors__id=author_id)
-
-
-    for book in book_objects:
-        pass
-
-    context = {'book_objects': book_objects,
-               'books_by_name': books_by_name,
-               'books_by_description': books_by_description,
-               'books_by_author': books_by_author,
-               # 'books_by_given_id': books_by_given_id,
-               'orders_by_user_id': orders_by_user_id,
-               'user_id': user_id,
-               'books_by_author_id': books_by_author_id,
-               'author_id': author_id,
-
-               }
-    return render(request, 'book/filtered_books.html', context)
 
 
 def ordered_books_count_ascending(request):

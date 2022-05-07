@@ -4,7 +4,15 @@
 
 {% block content %}
    <h1>Search Results</h1>
-   <h3>By searced text - "{{searched_text}}":</h3>
+
+{% if searched_text %}
+   <h3>By searched text - "{{searched_text}}":</h3>
+{% endif %}
+
+{% if searched_id %}
+   <h3>By searched author id - {{searched_id}}:</h3>
+{% endif %}
+
 
 {% if object_list %}
     <ul>
