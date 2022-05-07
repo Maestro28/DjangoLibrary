@@ -1,5 +1,4 @@
 from django.db import models
-from django.forms import ModelForm
 from author.models import Author
 
 # Create your models here.
@@ -28,9 +27,4 @@ class Book(models.Model):
         return f'{self.__class__.__name__}(id={self.id})'
 
 
-class BookForm(ModelForm):
-    class Meta:
-        model = Book
-        # fields = ['name', 'description', 'count', 'authors']
-        fields = '__all__'
 

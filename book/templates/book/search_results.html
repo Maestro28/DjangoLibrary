@@ -1,0 +1,15 @@
+{% extends "book/index.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+   <h1>Search Results</h1>
+
+<ul>
+  {% for book in object_list %}
+    <li>
+      {{ book.name }}, {{ book.description }}
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}

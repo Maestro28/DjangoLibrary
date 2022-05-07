@@ -19,6 +19,17 @@
         {% endfor %}
     </p>
 
+    <form action="{% url 'book:search_results' %}" method="get">
+    <!--{% csrf_token %}-->
+    {{ form }}
+    <input type="submit" value="Find">
+    </form><br>
+
+    <!--<form action="{% url 'book:search_results' %}" method="get">
+    <input name="q" type="text" placeholder="Search...">
+    </form>
+    <br>-->
+
     <a href="{% url 'book:filtered_books' %}">Filtered books</a><br><br>
     <a href="{% url 'book:ordered_books_count_ascending' %}">Ordered books by count ascending</a><br>
     <a href="{% url 'book:ordered_books_count_descending' %}">Ordered books by count descending</a><br>
@@ -51,22 +62,6 @@
           </tr>
             {% endfor %}
         </table>
-
-
-    <ul>
-    {% for book in book_objects %}
-        <li><h3>{{book.name}}</h3>
-             <a href="{% url 'book:update_book' book.id %}">Update book</a><br><br>
-            <p>id: {{book.id}}</p>
-            <p>description: {{book.description}}</p>
-            <p>count: {{book.count}}</p>
-            <p>Authors: </p>
-            {% for a in book.authors.all %}
-            <p>{{a.name}} {{a.surname}}</p>
-            {% endfor %}
-        </li>
-    {% endfor %}
-    </ul>
 
     {% else %}
         <p>No books are available.</p>

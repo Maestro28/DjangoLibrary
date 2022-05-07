@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404
 from django.template import loader
 from django.views import generic
+from django.db.models import Q
 
-from book.models import Book, BookForm
+from book.models import Book
+from book.forms import SearchingBookForm, BookForm
 from order.models import Order
 from author.models import Author
 
@@ -15,6 +17,7 @@ def index(request):
 def allbooks(request):
     book_objects = Book.objects.all()
     order_objects = Order.objects.all()
+    searchForm = SearchingBookForm()
 
     orders_book_id = []
     unordered_books_id = []
@@ -26,8 +29,24 @@ def allbooks(request):
 
     context = {'book_objects': book_objects,
                'unordered_books_id': unordered_books_id,
+               'form': searchForm,
                }
+    if searchForm.is_valid():
+        context['book_objects'] = book_objects.filter(name__startswith=searchForm.cleaned_data['search'])
+        return render(request, 'book/allbooks.html', context)
     return render(request, 'book/allbooks.html', context)
+
+
+class SearchResultsView(generic.ListView):
+    model = Book
+    template_name = "book/search_results.html"
+
+    def get_queryset(self):  # new
+        query = self.request.GET.get("search")
+        object_list = Book.objects.filter(
+            Q(name__icontains=query) | Q(description__icontains=query)
+        )
+        return object_list
 
 def add_book(request, id=0):
     if request.method == "GET":
