@@ -4,12 +4,18 @@
 
 {% block content %}
    <h1>Search Results</h1>
+   <h3>By searced text - "{{searched_text}}":</h3>
 
-<ul>
-  {% for book in object_list %}
-    <li>
-      {{ book.name }}, {{ book.description }}
-    </li>
-  {% endfor %}
-</ul>
+{% if object_list %}
+    <ul>
+      {% for book in object_list %}
+        <li>
+          {{ book.name }}, {{ book.description }}
+        </li>
+      {% endfor %}
+    </ul>
+{% else %}
+        <p>No books are found (</p>
+        {{book_objects}}
+    {% endif %}
 {% endblock %}

@@ -41,12 +41,18 @@ class SearchResultsView(generic.ListView):
     model = Book
     template_name = "book/search_results.html"
 
+
     def get_queryset(self):  # new
         query = self.request.GET.get("search")
         object_list = Book.objects.filter(
             Q(name__icontains=query) | Q(description__icontains=query)
         )
         return object_list
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchResultsView, self).get_context_data(**kwargs)
+        context['searched_text'] = self.request.GET.get("search")
+        return context
 
 def add_book(request, id=0):
     if request.method == "GET":
