@@ -1,5 +1,5 @@
 from django.db import models
-from django.forms import ModelForm
+
 
 
 class Author(models.Model):
@@ -36,8 +36,4 @@ class Author(models.Model):
         return f'{self.__class__.__name__}(id={self.id})'
 
 
-class AuthorForm(ModelForm):
-    class Meta:
-        model = Author
-        fields = '__all__'
-        # fields = ['name', 'surname', 'patronymic', 'books']
+

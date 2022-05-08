@@ -9,6 +9,12 @@
     <br>
     <br>
 
+     <form action="{% url 'author:search_results' %}" method="get">
+    <!--{% csrf_token %}-->
+    {{ form }}
+    <input type="submit" value="Find">
+    </form><br>
+
     {% if author_objects %}
 
 

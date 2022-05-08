@@ -1,13 +1,10 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse, Http404
-from django.template import loader
 from django.views import generic
 from django.db.models import Q
 
 from book.models import Book
 from book.forms import SearchingBookForm, BookForm, IdForm, SortForm
 from order.models import Order
-from author.models import Author
 
 # Create your views here.
 
