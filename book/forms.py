@@ -24,6 +24,15 @@ class IdForm(forms.Form):
     id_field = forms.ChoiceField(choices=choices, label="Find book by author id")
 
 
+class SortForm(forms.Form):
+    choices = (
+        ('count', 'count ascending'),
+        ("-count", 'count descending'),
+        ("name", 'name'),
+    )
+    sort_field = forms.ChoiceField(choices=choices, label="Change books order")
+
+
 class BookForm(ModelForm):
     class Meta:
         model = Book

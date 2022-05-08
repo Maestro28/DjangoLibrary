@@ -6,6 +6,7 @@
     <h1>Information about all books in library</h1>
     <!--<a href="{% url 'order:all_orders' %}">Orders</a>-->
     <a href="{% url 'book:add_book' %}">Add book</a>
+
     {% if book_objects %}
     <p>Available books by id:
         {% for book in book_objects %}
@@ -13,11 +14,13 @@
         {% endfor %}
     </p>
 
+    {% if unordered_books_id %}
     <p>Unordered books by id:
         {% for book_id in unordered_books_id %}
             <a href="{% url 'book:id_book' book_id %}">{{ book_id }}</a>
         {% endfor %}
     </p>
+    {% endif %}
 
     <form action="{% url 'book:search_results' %}" method="get">
     <!--{% csrf_token %}-->
@@ -31,16 +34,16 @@
     <input type="submit" value="Find">
     </form><br>
 
+    <form action="{% url 'book:allbooks_sorted' %}" method="get">
+    <!--{% csrf_token %}-->
+    {{ sort_form }}
+    <input type="submit" value="Find">
+    </form><br>
+
     <!--<form action="{% url 'book:search_results' %}" method="get">
     <input name="q" type="text" placeholder="Search...">
     </form>
     <br>-->
-
-    <a href="{% url 'book:ordered_books_count_ascending' %}">Ordered books by count ascending</a><br>
-    <a href="{% url 'book:ordered_books_count_descending' %}">Ordered books by count descending</a><br>
-    <a href="{% url 'book:ordered_books_name_ascending' %}">Ordered books by name ascending</a><br>
-    <a href="{% url 'book:ordered_books_name_descending' %}">Ordered books by name descending</a><br>
-    <br>
 
         <table style="width:100%">
           <tr>
@@ -51,21 +54,39 @@
             <th>Authors</th>
             <th>Edit</th>
           </tr>
-            {% for book in book_objects %}
+        {% if object_list %}
+        {% for book in object_list %}
           <tr>
             <td>{{book.id}}</td>
             <td>{{book.name}}</td>
             <td>{{book.description}}</td>
             <td>{{book.count}}</td>
             <td>{% for a in book.authors.all %}
-            {{a.name}} {{a.surname}}
+                {{a.name}} {{a.surname}}
                 {% if not forloop.last %}
                 ,
-                {% endif%}
-            {% endfor %}</td>
+                {% endif %}
+                {% endfor %}</td>
               <td><a href="{% url 'book:update_book' book.id %}">Update book</a><br><br></td>
           </tr>
             {% endfor %}
+        {% else %}
+        {% for book in book_objects %}
+          <tr>
+            <td>{{book.id}}</td>
+            <td>{{book.name}}</td>
+            <td>{{book.description}}</td>
+            <td>{{book.count}}</td>
+            <td>{% for a in book.authors.all %}
+                {{a.name}} {{a.surname}}
+                {% if not forloop.last %}
+                ,
+                {% endif %}
+                {% endfor %}</td>
+              <td><a href="{% url 'book:update_book' book.id %}">Update book</a><br><br></td>
+          </tr>
+            {% endfor %}
+            {% endif %}
         </table>
 
     {% else %}
