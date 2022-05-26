@@ -3,10 +3,13 @@ from django.views import generic
 from django.db.models import Q
 
 from book.models import Book
-from book.forms import SearchingBookForm, BookForm, IdForm, SortForm
 from order.models import Order
 
 # Create your views here.
+
+import sys
+if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
+    from book.forms import SearchingBookForm, BookForm, IdForm, SortForm
 
 def index(request):
     return render(request, 'book/index.html')

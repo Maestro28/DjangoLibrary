@@ -1,6 +1,9 @@
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+# from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.validators import validate_email
 from django.db import models
+
+from .managers import CustomUserManager
 
 # Create your models here.
 
@@ -10,7 +13,7 @@ ROLE_CHOICES = (
 )
 
 
-class CustomUser(AbstractBaseUser):
+class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
         This class represents a basic user.
     """
@@ -25,8 +28,23 @@ class CustomUser(AbstractBaseUser):
     role = models.IntegerField(default=0, choices=ROLE_CHOICES)
     is_active = models.BooleanField(default=False)
 
+    is_admin = models.BooleanField(default=False)
+
     USERNAME_FIELD = 'email'
-    objects = BaseUserManager()
+    REQUIRED_FIELDS = ['first_name', 'middle_name', 'last_name']
+
+    # objects = BaseUserManager()
+    objects = CustomUserManager()
+
+    ordering = ('email',)
+    # class Meta:
+    #     ordering = ['id']
+
+    @property
+    def is_staff(self):
+        """Is the user a member of staff?"""
+        # Simplest possible answer: All admins are staff
+        return self.is_admin
 
     def __str__(self):
         """
