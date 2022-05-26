@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add book</title>
-</head>
-<body>
-    <form action="", method="post", autocomplete="off">
+{% extends "authentication/base_home.html" %}
+
+{% block title %}Add book{% endblock %}
+
+{% block content %}
+   <form action="", method="post", autocomplete="off">
         {% csrf_token %}
         <!--<label for="name">name:</label>
         {{form.name}}<br>
@@ -18,5 +16,5 @@
         {{form.as_p}}
         <button type="submit">{{submit}}</button>
     </form>
-</body>
-</html>
+{% endblock %}
+

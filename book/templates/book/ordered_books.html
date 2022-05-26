@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ordered Books</title>
-</head>
-<body>
-    {% for book in book_objects %}
+{% block title %}Ordered Books{% endblock %}
+
+{% block content %}
+   {% for book in book_objects %}
         <li><b>{{book.name}}</b>
             <p>description: {{book.description}}</p>
             <p>count: {{book.count}}</p>
@@ -15,5 +11,5 @@
             {% endfor %}
         </li>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
+

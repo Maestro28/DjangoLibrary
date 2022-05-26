@@ -3,5 +3,5 @@ from django.shortcuts import render
 # Create your views here.
 
 
-def dashboard(request):
-    return render(request, "authentication/dashboard.html")
+def base_home(request):
+    return render(request, "authentication/base_home.html")

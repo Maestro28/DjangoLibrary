@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Book by id</title>
-</head>
-<body>
+{% extends "authentication/base_home.html" %}
+
+{% block title %}Book by id{% endblock %}
+
+{% block content %}
     <h1>{{book.name}}(id={{book.id}})</h1>
     <h3>"{{book.description}}"</h3>
-</body>
-</html>
+{% endblock %}
