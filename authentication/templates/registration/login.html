@@ -1,0 +1,15 @@
+{% extends "book/index.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+   <h2>Login</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Login">
+    </form>
+
+    <a href="{% url 'authentication:dashboard' %}">Back to dashboard</a>
+{% endblock %}

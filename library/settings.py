@@ -117,6 +117,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
 
+LOGIN_REDIRECT_URL = "authentication:dashboard"
+LOGOUT_REDIRECT_URL = "authentication:dashboard"
+
 # AUTHENTICATION_BACKENDS = (
 #         'django.contrib.auth.backends.RemoteUserBackend',
 #         'django.contrib.auth.backends.ModelBackend',
