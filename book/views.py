@@ -11,8 +11,6 @@ import sys
 if 'makemigrations' not in sys.argv and 'migrate' not in sys.argv:
     from book.forms import SearchingBookForm, BookForm, IdForm, SortForm
 
-def index(request):
-    return render(request, 'book/index.html')
 
 def allbooks(request):
     book_objects = Book.objects.all()
