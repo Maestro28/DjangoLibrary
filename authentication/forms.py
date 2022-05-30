@@ -12,8 +12,9 @@ from .models import CustomUser
 #         fields = UserCreationForm.Meta.fields + ("email",)
 
 
-class CustomUserCreationForm(ModelForm):
-    error_css_class = "error"
+class CustomUserCreationForm(UserCreationForm):
+    # error_css_class = "error"
+
     password1 = forms.CharField(label=_('Password'),
                                 widget=forms.PasswordInput(attrs={'class': 'form-control',
                                                                   'placeholder': _('Enter password')}))
@@ -38,7 +39,10 @@ class CustomUserCreationForm(ModelForm):
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError(_("Passwords no match"))
-        return password2
+            # self._errors['middle_name'] = self.error_class([
+            #     'Passwords no match'])
+        else:
+            return password2
 
     def save(self, commit=True):
         pas = self.clean_password2()
@@ -47,8 +51,7 @@ class CustomUserCreationForm(ModelForm):
         return CustomUser.objects.create_user(password=pas, **self.cleaned_data)
 
 
-
-class CustomRegisterForm(ModelForm):
+class ProfileForm(ModelForm):
     class Meta:
         model = CustomUser
-        fields = ['email', 'first_name', 'middle_name', 'last_name']
+        fields = ['first_name', 'middle_name', 'last_name']

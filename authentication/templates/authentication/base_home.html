@@ -28,6 +28,10 @@ table, th, td {
             <font color="grey">{{ user.first_name|default:'Guest' }}</font>
         </span>, welcome to the index page !
     </h1>
+
+    <br>
+
+     <a href="{% url 'authentication:profile' %}">Edit profile</a>
     {% endblock %}
 </body>
 </html>

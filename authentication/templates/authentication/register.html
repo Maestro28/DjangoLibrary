@@ -1,11 +1,27 @@
 {% extends "authentication/base_home.html" %}
 
+{% block title %}Register{% endblock %}
+
 {% block content %}
+
+{% if form.errors %}
+<h3><font color="red">Please fill the form in proper way:</font></h3>
+{% endif %}
+
 <h2>Register</h2>
 
 <form method="post">
     {% csrf_token %}
     {{form.as_p}}
+<!--    {% if form.errors %}-->
+<!--       {% for field in form %}-->
+<!--           {% for error in field.errors %}-->
+<!--              <div class="alert alert-danger">-->
+<!--                   <strong><font color="red">{{ error|escape }}</font></strong>-->
+<!--              </div>-->
+<!--           {% endfor %}-->
+<!--       {% endfor %}-->
+<!--    {% endif %}-->
     <input type="submit" value="Register">
 </form>
 

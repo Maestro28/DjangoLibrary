@@ -1,0 +1,14 @@
+{% extends "authentication/base_home.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+
+    <h1>User:{{user.email}}</h1>
+
+    <form method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Update">
+    </form>
+{% endblock %}
