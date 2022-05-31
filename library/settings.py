@@ -129,6 +129,12 @@ LOGOUT_REDIRECT_URL = "authentication:base_home"
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 1025
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'

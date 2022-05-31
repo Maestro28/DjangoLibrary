@@ -12,5 +12,10 @@
     </form>
 
     <a href="{% url 'authentication:register' %}">Register</a><br>
-    <a href="{% url 'authentication:base_home' %}">Back to dashboard</a>
+    <a href="{% url 'authentication:base_home' %}">Back to dashboard</a><br>
+
+    {% if form.errors %}
+        <a href="{% url 'authentication:password_reset' %}">Reset password with email</a>
+    {% endif %}
+
 {% endblock %}
