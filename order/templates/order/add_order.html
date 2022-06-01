@@ -1,0 +1,23 @@
+{% extends "authentication/base_home.html" %}
+
+{% block title %}All orders{% endblock %}
+
+{% block content %}
+    <h1>Add order</h1>
+     <a href="{% url 'order:all_orders' %}">All orders</a>
+    <br>
+
+    <form action="", method="post", autocomplete="off">
+        {% csrf_token %}
+        <!--<label for="name">name:</label>
+        {{form.name}}<br>
+        <label for="description">description:</label>
+        {{form.description}}<br>
+        <label for="count">count:</label>
+        {{form.count}}<br>
+        <label for="authors">authors:</label>
+        {{form.authors}}<br>-->
+        {{form.as_p}}
+        <button type="submit">{{submit}}</button>
+    </form>
+{% endblock %}

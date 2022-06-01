@@ -61,7 +61,7 @@ def add_book(request, id=0):
             form = BookForm(request.POST, instance=book)
         if form.is_valid():
             form.save()
-        return redirect('/allbooks')
+        return redirect('book:allbooks')
 
 
 class ID_BookView(generic.DetailView):
