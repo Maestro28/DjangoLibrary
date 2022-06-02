@@ -7,16 +7,13 @@
      <a href="{% url 'order:all_orders' %}">All orders</a>
     <br>
 
+    {% if no_book %}
+    <h3><font color="red">There is no "{{no_book}}" in the library now ( <br>
+    But U can try to order it later..</font></h3>
+    {% endif %}
+
     <form action="", method="post", autocomplete="off">
         {% csrf_token %}
-        <!--<label for="name">name:</label>
-        {{form.name}}<br>
-        <label for="description">description:</label>
-        {{form.description}}<br>
-        <label for="count">count:</label>
-        {{form.count}}<br>
-        <label for="authors">authors:</label>
-        {{form.authors}}<br>-->
         {{form.as_p}}
         <button type="submit">{{submit}}</button>
     </form>

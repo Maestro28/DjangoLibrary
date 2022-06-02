@@ -7,8 +7,16 @@ from .forms import OrderCreateForm, OrderUpdateForm
 # Create your views here.
 
 def all_orders(request):
-    order_objects = Order.objects.all()
-    context = {'order_objects': order_objects}
+    # order_objects = Order.objects.all()
+    if request.user.is_admin:
+        in_progress_orders = Order.objects.filter(end_at__isnull=True)
+        closed_orders = Order.objects.filter(end_at__isnull=False)
+    else:
+        in_progress_orders = Order.objects.filter(end_at__isnull=True, user=request.user)
+        closed_orders = Order.objects.filter(end_at__isnull=False, user=request.user)
+
+    # context = {'order_objects': order_objects}
+    context = {'in_progress_orders': in_progress_orders, 'closed_orders': closed_orders}
     return render(request, 'order/all_orders.html', context)
 
 def add_order(request, id=0):
@@ -30,9 +38,22 @@ def add_order(request, id=0):
         else:
             order = Order.objects.get(pk=id)
             form = OrderUpdateForm(request.POST, instance=order)
-            submit = "Update"
+            submit = "Close"
         if form.is_valid():
             order = form.save(commit=False)
+            # change book count
+            book = order.book
+            if submit == "Close":
+                book.count += 1
+            else:
+                if book.count == 0:
+                    return render(request, 'order/add_order.html', {'form': form,
+                                                                    'submit': submit,
+                                                                    'no_book': book.name
+                                                                    })
+                book.count -= 1
+            book.save()
+
             order.user = request.user
             order.save()
             return redirect('/orders/all_orders')

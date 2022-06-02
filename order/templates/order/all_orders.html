@@ -3,8 +3,12 @@
 {% block title %}All orders{% endblock %}
 
 {% block content %}
-    <h1>Information about all orders in library</h1>
 
+{% if user.is_admin %}
+    <h1>Information about all orders in library</h1>
+{% else %}
+    <h1>Information about orders</h1>
+{% endif %}
     <a href="{% url 'order:add_order' %}">Add order</a>
     <br>
     <br>
@@ -15,19 +19,8 @@
     <a href="{% url 'order:filtered_orders' %}">Information about all orders  who does not hand over books on time</a>
     <br>-->
 
-    {% if order_objects %}
-<!--    <ol>-->
-<!--    {% for order in order_objects %}-->
-<!--        <li><h3>Order(id = {{order.id}})</h3>-->
-<!--            <p><b>user:</b> {{order.user}}</p>-->
-<!--            <p><b>book:</b> {{order.book}}</p>-->
-<!--            <p><b>created at:</b> {{order.created_at}}</p>-->
-<!--            <p><b>end at:</b> {{order.end_at}}</p>-->
-<!--            <p><b>plated end at:</b> {{order.plated_end_at}}</p><br>-->
-<!--        </li>-->
-<!--    {% endfor %}-->
-<!--    </ol>-->
-
+    {% if in_progress_orders %}
+    <h2>Orders in progress:</h2>
         <table style="width:100%">
           <tr>
             <th>Id</th>
@@ -36,9 +29,9 @@
             <th>Created at</th>
             <th>End at</th>
             <th>Plated end at</th>
-            <th>Edit</th>
+            <th>Close</th>
           </tr>
-            {% for order in order_objects %}
+          {% for order in in_progress_orders %}
           <tr>
             <td>{{order.id}}</td>
             <td>{{order.user}}</td>
@@ -46,11 +39,40 @@
             <td>{{order.created_at}}</td>
             <td>{{order.end_at}}</td>
             <td>{{order.plated_end_at}}</td>
-            <td><a href="{% url 'order:update_order' order.id %}">Update order</a><br><br></td>
+            <td><a href="{% url 'order:update_order' order.id %}">Close order</a><br><br></td>
           </tr>
-            {% endfor %}
+          {% endfor %}
         </table>
     {% else %}
-        <p>No orders are available.</p>
+        <p>No orders in_progress are available.</p>
+    {% endif %}
+
+<br>
+<br>
+
+{% if closed_orders %}
+    <h2>Orders history:</h2>
+        <table style="width:100%">
+          <tr>
+            <th>Id</th>
+            <th>User</th>
+            <th>Book</th>
+            <th>Created at</th>
+            <th>End at</th>
+            <th>Plated end at</th>
+          </tr>
+          {% for order in closed_orders %}
+          <tr>
+            <td>{{order.id}}</td>
+            <td>{{order.user}}</td>
+            <td>{{order.book}}</td>
+            <td>{{order.created_at}}</td>
+            <td>{{order.end_at}}</td>
+            <td>{{order.plated_end_at}}</td>
+          </tr>
+          {% endfor %}
+        </table>
+    {% else %}
+        <p>No orders history yet..</p>
     {% endif %}
 {% endblock %}
