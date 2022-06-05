@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
+from django.views import generic
+import datetime
 
 from .models import Order
-from .forms import OrderCreateForm, OrderUpdateForm
+from .forms import OrderCreateForm, OrderUpdateForm , SortForm
 
 
 # Create your views here.
@@ -15,18 +17,30 @@ def all_orders(request):
         in_progress_orders = Order.objects.filter(end_at__isnull=True, user=request.user)
         closed_orders = Order.objects.filter(end_at__isnull=False, user=request.user)
 
+    query = request.GET.get("sort_field")
+    if query:
+        in_progress_orders = in_progress_orders.order_by(query)
+        closed_orders = closed_orders.order_by(query)
+
     # context = {'order_objects': order_objects}
-    context = {'in_progress_orders': in_progress_orders, 'closed_orders': closed_orders}
+    sort_form = SortForm()
+    context = {
+        'in_progress_orders': in_progress_orders,
+        'closed_orders': closed_orders,
+        'sort_form': sort_form,
+    }
     return render(request, 'order/all_orders.html', context)
 
 def add_order(request, id=0):
     if request.method == "GET":
         if id == 0:
-            form = OrderCreateForm()
+            planed_date = datetime.datetime.now() + datetime.timedelta(days=5)
+            planed_date = planed_date.strftime("%Y-%m-%d")
+            form = OrderCreateForm(initial={'plated_end_at': planed_date})
             submit = "Create order"
         else:
             order = Order.objects.get(pk=id)
-            form = OrderUpdateForm(instance=order)
+            form = OrderUpdateForm(instance=order, initial={'end_at': datetime.datetime.now()})
             submit = "Update"
         context = {'form': form,
                    'submit': submit}
@@ -59,13 +73,3 @@ def add_order(request, id=0):
             return redirect('/orders/all_orders')
         else:
             return render(request, 'order/add_order.html', {'form': form, 'submit': submit})
-
-def ordered_orders(request):
-    order_objects = Order.objects.all().order_by('created_at', 'plated_end_at')
-    context = {'order_objects': order_objects}
-    return render(request, 'order/ordered_orders.html', context)
-
-def filtered_orders(request):
-    order_objects = Order.objects.filter(created_at__gt='end_at')
-    context = {'order_objects': order_objects}
-    return render(request, 'order/ordered_orders.html', context)

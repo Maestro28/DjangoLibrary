@@ -15,3 +15,12 @@ class OrderUpdateForm(ModelForm):
     class Meta:
         model = Order
         fields = ['end_at']
+
+
+class SortForm(forms.Form):
+    choices = (
+        ('created_at', 'created at ascending'),
+        ("-created_at", 'created at descending'),
+        ("book", 'book name'),
+    )
+    sort_field = forms.ChoiceField(choices=choices, label="Change order ordering")

@@ -9,15 +9,22 @@
 {% else %}
     <h1>Information about orders</h1>
 {% endif %}
+
+{% if sorted_object_list %}
+<h2>sorted</h2>>
+{% endif %}
+
     <a href="{% url 'order:add_order' %}">Add order</a>
+
     <br>
     <br>
-    <a href="{% url 'order:ordered_orders' %}">Information about all orders sorted by date (created, plated at)</a>
+     <form action="{% url 'order:all_orders' %}" method="get">
+    <!--{% csrf_token %}-->
+    {{ sort_form }}
+    <input type="submit" value="Find">
+    </form><br>
     <br>
     <br>
-    <!--<br>
-    <a href="{% url 'order:filtered_orders' %}">Information about all orders  who does not hand over books on time</a>
-    <br>-->
 
     {% if in_progress_orders %}
     <h2>Orders in progress:</h2>

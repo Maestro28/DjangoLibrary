@@ -3,8 +3,16 @@
 {% block title %}All orders{% endblock %}
 
 {% block content %}
-    <h1>Add order</h1>
-     <a href="{% url 'order:all_orders' %}">All orders</a>
+
+    {% if submit == "Create order" %}
+        <h1>Add order</h1>
+    {% endif %}
+
+    {% if submit == "Update" %}
+        <h1>Close order</h1>
+    {% endif %}
+
+    <a href="{% url 'order:all_orders' %}">All orders</a>
     <br>
 
     {% if no_book %}
