@@ -4,6 +4,8 @@
 
 {% block content %}
 
+    {% load bootstrap5 %}
+
     {% if submit == "Create order" %}
         <h1>Add order</h1>
     {% endif %}
@@ -20,9 +22,9 @@
     But U can try to order it later..</font></h3>
     {% endif %}
 
-    <form action="", method="post", autocomplete="off">
+    <form action="", method="post", autocomplete="off", style="width:50%; margin-left: 20px">
         {% csrf_token %}
-        {{form.as_p}}
+        {% bootstrap_form form %}
         <button type="submit">{{submit}}</button>
     </form>
 {% endblock %}

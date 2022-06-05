@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'book.apps.BookConfig',
     'order.apps.OrderConfig',
 
+    "bootstrap5"
+
     # 'authentication',
     # 'author',
     # 'book',

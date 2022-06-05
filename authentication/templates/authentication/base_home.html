@@ -1,8 +1,12 @@
-<!DOCTYPE html>
+{% extends 'authentication/bootstrap5.html' %}
+{% load bootstrap5 %}
+{% block bootstrap5_content %}
 <html lang="en">
 <style>
 table, th, td {
   border:1px solid black;
+  margin-left: 1%;
+  margin-right: 1%;
 }
 </style>
 <head>
@@ -10,6 +14,7 @@ table, th, td {
     <title>{% block title %}Home page{% endblock %}</title>
 </head>
 <body>
+<div style="margin-left: 10px; margin-right: 10px">
     <a href="{% url 'authentication:base_home' %}">Home</a> |
     <a href="{% url 'book:allbooks' %}">Books</a> |
     <a href="{% url 'author:all_authors' %}">Authors</a> |
@@ -21,7 +26,10 @@ table, th, td {
             <a href="{% url 'authentication:login' %}">Login</a>
         {% endif %}
     </div>
+    </div>
     <hr>
+
+
     {% block content %}
     <h1> Hello,
         <span style="font-family: 'Source Sans Pro', sans-serif;">
@@ -35,3 +43,4 @@ table, th, td {
     {% endblock %}
 </body>
 </html>
+    {% endblock %}
