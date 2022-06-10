@@ -11,9 +11,10 @@
         {% bootstrap_form form %}
         <input type="submit" value="Login">
     </form>
+<br>
 
-    <a href="{% url 'authentication:register' %}">Register</a><br>
-    <a href="{% url 'authentication:base_home' %}">Back to dashboard</a><br>
+    <a href="{% url 'authentication:register' %}">Register</a> or
+    <a href="{% url 'authentication:base_home' %}">Back to dashboard</a><br><br>
 
     {% if form.errors %}
         <a href="{% url 'authentication:password_reset' %}">Reset password with email</a>
