@@ -62,4 +62,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         """
         return f'{self.__class__.__name__}(id={self.id})'
 
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
 
