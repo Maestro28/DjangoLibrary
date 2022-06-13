@@ -16,9 +16,7 @@ def api_root(request, format=None):
 
 
 urlpatterns = [
-    path('', api_root),
-    # path('api/v1/auth/', include('djoser.urls')),
-    # path('api/v1/auth_token/', include('djoser.urls.authtoken')),
+    path('', api_root, name='root'),
     path('v1/user/', include('authentication.rest.urls', namespace="authentication")),
     path('v1/order/', include('order.rest.urls', namespace="order")),
     path('v1/author/', include('author.rest.urls', namespace="author")),

@@ -24,6 +24,7 @@ table, th, td {
     <a href="{% url 'author:all_authors' %}">Authors</a>
     <a href="{% url 'order:all_orders' %}">Orders</a>
   <div class="topnav-right">
+        <a href="{% url 'api:root' %}">Rest API</a>
         {% if user.is_authenticated %}
             <a href="{% url 'authentication:logout' %}">Logout</a>
         {% else %}
@@ -43,7 +44,10 @@ table, th, td {
 
     <br>
 
-     <a href="{% url 'authentication:profile' %}">Edit profile</a>
+    <a href="{% url 'authentication:profile' %}">Edit profile</a>
+    <br><br>
+    <a href="{% url 'api:root' %}">Go to Rest API</a>
+
     {% endblock %}
 </body>
 </html>
